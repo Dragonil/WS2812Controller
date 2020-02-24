@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="de.oligorges.ws2812editor.navigation.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_edit"
+            app:destination="@id/nav_edit" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_editDevice"
+            app:destination="@id/nav_editDevice" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_slideshow"
+            app:destination="@id/nav_new" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_edit"
+        android:name="de.oligorges.ws2812editor.navigation.edit.EditFragment"
+        android:label="@string/menu_edit"
+        tools:layout="@layout/fragment_edit" />
+
+    <fragment
+        android:id="@+id/nav_new"
+        android:name="de.oligorges.ws2812editor.navigation.new.NewFragment"
+        android:label="@string/menu_new" />
+
+    <fragment
+        android:id="@+id/nav_tools"
+        android:name="de.oligorges.ws2812editor.navigation.tools.ToolsFragment"
+        android:label="@string/menu_tools"
+        tools:layout="@layout/fragment_tools" />
+
+    <fragment
+        android:id="@+id/nav_share"
+        android:name="de.oligorges.ws2812editor.navigation.share.ShareFragment"
+        android:label="@string/menu_share"
+        tools:layout="@layout/fragment_share" />
+
+    <fragment
+        android:id="@+id/nav_editDevice"
+        android:name="de.oligorges.ws2812editor.navigation.editDevice.EditDeviceFragment"
+        android:label="@string/menu_edit_device"
+        tools:layout="@layout/fragment_edit_device" />
+</navigation>

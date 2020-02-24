@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">WS2812Editor</string>
+    <string name="action_settings">Led Settings</string>
+    <string name="title_activity_navigation">Navigation</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">WS2812 Manager</string>
+    <string name="nav_header_subtitle">by Oliver Gorges</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_new">New Strip</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_edit_device">DeviceSettings</string>
+
+    <string-array name="colors">
+        <item>Green</item>
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Yellow</item>
+        <item>Orange</item>
+        <item>Cyan</item>
+        <item>Magenta</item>
+        <item>Purple</item>
+    </string-array>
+
+    <string-array name="devices">
+        <item>Device1</item>
+        <item>Device1</item>
+        <item>Device1</item>
+    </string-array>
+</resources>
