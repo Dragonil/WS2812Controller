@@ -119,6 +119,7 @@ class EditViewModel(app: Application): AndroidViewModel(app) {
         var json = JSONObject()
 
         var device = JSONObject()
+        var colors = JSONArray()
         var leds = JSONArray()
         var animation = JSONObject()
 
@@ -129,23 +130,44 @@ class EditViewModel(app: Application): AndroidViewModel(app) {
         animation.put("ID", s.animationID)
         animation.put("delay", s.delay)
 
-        for(l in ledList){
-            var led = JSONObject()
-            led.put("State", l.state)
+        val compColors: List<Int> = compressColors(ledList)
+
+        for(c in compColors){
             var color = JSONArray()
-            led.put("Color", color)
-            color.put(Color.pack(l.color).toColor().red()*255)
-            color.put(Color.pack(l.color).toColor().green()*255)
-            color.put(Color.pack(l.color).toColor().blue()*255)
-            leds.put(led)
+            color.put(Color.pack(c).toColor().red()*255)
+            color.put(Color.pack(c).toColor().green()*255)
+            color.put(Color.pack(c).toColor().blue()*255)
+            colors.put(color)
+        }
+
+        for(l in ledList){
+            var value: Int = compColors.indexOf(l.color)
+            if (l.state){
+                value = value + 128
+            }
+            leds.put(value)
         }
 
 
         json.put("device", device)
+        json.put("colors", colors)
         json.put("leds", leds)
         json.put("animation", animation)
 
         return json
+    }
+
+
+    fun compressColors(ledList: List<led>): List<Int>{
+        val colors = mutableListOf<Int>()
+        for(l in ledList){
+            if(!colors.contains(l.color)){
+                colors.add(l.color)
+            }
+
+        }
+        return colors
+
     }
 
 

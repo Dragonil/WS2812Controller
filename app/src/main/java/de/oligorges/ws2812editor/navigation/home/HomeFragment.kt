@@ -1,10 +1,12 @@
 package de.oligorges.ws2812editor.navigation.home
 
-import android.app.Application
+import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.Typeface
 import androidx.lifecycle.Observer
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,15 +14,11 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import de.oligorges.ws2812editor.R
-import java.util.*
 import android.widget.LinearLayout
 import androidx.core.os.bundleOf
-import androidx.core.view.marginBottom
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import de.oligorges.ws2812editor.Room.stripe
-import de.oligorges.ws2812editor.navigation.tools.ToolsViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -70,7 +68,12 @@ class HomeFragment : Fragment(){
             val stripe: stripe = stripes.elementAt(i)
             Log.e("Button", stripe.name)
 
-            if (i%2 == 0){
+            var orientation = requireActivity().getResources().getConfiguration().orientation
+            var e = 2
+            if(orientation == Configuration.ORIENTATION_LANDSCAPE)
+                e = 3
+
+            if (i%e == 0){
                 row = TableRow(this.context)
                 val param = TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
@@ -80,21 +83,34 @@ class HomeFragment : Fragment(){
                 row.setLayoutParams(param)
                 table.addView(row)
             }
-            var button = Button(this.context)
+
+            var linearLayout = LinearLayout(this.context)
+            linearLayout.orientation = LinearLayout.VERTICAL
             val param = TableRow.LayoutParams(
                 TableRow.LayoutParams.MATCH_PARENT,
-                500,
+                600,
                 0.5f
             )
-            param.setMargins(20,20,20,20)
-            button.setLayoutParams(param)
-            button.text = stripe.name
+            param.setMargins(10,10,10,20)
+            linearLayout.setLayoutParams(param)
+
+            var button = ImageButton(this.context)
+            val param2 = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                500
+            )
+            param2.setMargins(10,10,10,10)
+            button.setLayoutParams(param2)
+            button.setImageResource(R.drawable.ic_power_settings_new_black_64dp);
+
             button.setTag("off")
             button.setBackgroundColor(defaultColor)
 
+            homeViewModel.getStatus(stripe, button)
 
-            // Part of Stripeo
+            // Part of Strip
             button.setOnClickListener {
+                homeViewModel.toogleStrip(stripe)
                 if(button.getTag().toString() == "on"){
                     button.setBackgroundColor(defaultColor)
                     button.setTag("off")
@@ -110,7 +126,21 @@ class HomeFragment : Fragment(){
                 true
             }
 
-            row.addView(button)
+            var text = TextView(this.context)
+            text.text = stripe.name.toUpperCase()
+            text.width = LinearLayout.LayoutParams.MATCH_PARENT
+            text.gravity = Gravity.CENTER
+            text.setTypeface(Typeface.DEFAULT_BOLD)
+            text.setOnClickListener{
+                var bundle = bundleOf("stripeID" to stripe.uid)
+                this.findNavController().navigate(R.id.nav_edit, bundle)
+                true
+            }
+
+            linearLayout.addView(button)
+            linearLayout.addView(text)
+
+            row.addView(linearLayout)
 
 
         }

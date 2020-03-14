@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.TintableCompoundButton
 import androidx.fragment.app.Fragment
@@ -34,6 +35,7 @@ class EditFragment : Fragment() {
     lateinit var stripes: MutableMap<Int, Stripe>
     lateinit var stripe: stripe
     lateinit var stripeLed: List<led>
+    lateinit var picker: ColorPicker
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -83,6 +85,12 @@ class EditFragment : Fragment() {
         // Init Code
         selectColor()
         toogleAll()
+
+        val animations: Button = requireActivity().findViewById(R.id.setAnimation)
+        animations.setOnClickListener(){
+            var bundle = bundleOf("stripeID" to stripe.uid)
+            this.findNavController().navigate(R.id.nav_animation, bundle)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -152,6 +160,8 @@ class EditFragment : Fragment() {
 
             radioButton.id = i
             radioButton.text = ""
+            radioButton.buttonDrawable = ContextCompat.getDrawable(this.requireContext(), R.drawable.ledradio)
+            radioButton.setPadding(10, 0, 10, 10);
 
 
             if(this.stripeLed.get(i).state){
@@ -175,6 +185,9 @@ class EditFragment : Fragment() {
                     rb.setTag("on")
                     this.stripeLed.get(i).state = true
                     this.stripeLed.get(i).changed = true
+                    this.picker.oldCenterColor = color
+                    this.picker.color = this.stripeLed.get(i).color
+
                 }
             }
             radioButton.setOnLongClickListener{
@@ -214,7 +227,7 @@ class EditFragment : Fragment() {
         //colorPicker.removeAllViews()
 
         val selectColor = requireActivity().findViewById<Button>(R.id.selectColor)
-        val picker = requireActivity().findViewById(R.id.picker) as ColorPicker
+        picker = requireActivity().findViewById(R.id.picker) as ColorPicker
         val svBar = requireActivity().findViewById(R.id.svbar) as SVBar
         picker.addSVBar(svBar)
 

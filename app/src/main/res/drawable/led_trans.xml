@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="6dp"
+    android:height="6dp">
+    <foreground android:drawable="@drawable/ic_ledtranstest7"/>
+    <background android:drawable="@drawable/ic_ledtranstest7"/>
+</adaptive-icon>

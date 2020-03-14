@@ -25,7 +25,11 @@
         android:id="@+id/nav_edit"
         android:name="de.oligorges.ws2812editor.navigation.edit.EditFragment"
         android:label="@string/menu_edit"
-        tools:layout="@layout/fragment_edit" />
+        tools:layout="@layout/fragment_edit" >
+        <action
+            android:id="@+id/action_nav_edit_to_nav_animation"
+            app:destination="@id/nav_animation" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_new"
@@ -33,10 +37,10 @@
         android:label="@string/menu_new" />
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="de.oligorges.ws2812editor.navigation.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        android:id="@+id/nav_animation"
+        android:name="de.oligorges.ws2812editor.navigation.animation.AnimationsFragment"
+        android:label="@string/menu_animations"
+        tools:layout="@layout/fragment_animation" />
 
     <fragment
         android:id="@+id/nav_share"

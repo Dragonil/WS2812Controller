@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:layout_weight="1"
@@ -33,13 +33,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toTopOf="@+id/Colorpicker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/StripeName">
+        app:layout_constraintTop_toBottomOf="@+id/StripeName">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -81,9 +81,11 @@
             android:id="@+id/picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toTopOf="@+id/svbar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <de.oligorges.ws2812editor.holocolorpicker.SVBar
             android:id="@+id/svbar"
@@ -94,17 +96,18 @@
             app:layout_constraintTop_toBottomOf="@+id/picker" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/setMulti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Set multible Leds"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Colorpicker"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/Colorpicker" />
     <LinearLayout
         android:id="@+id/range"
         android:layout_width="match_parent"
@@ -189,6 +192,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -200,6 +204,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             tools:text="Bightness" />
 
         <de.oligorges.ws2812editor.holocolorpicker.ValueBar
@@ -211,6 +216,14 @@
             android:fadeScrollbars="false" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/setAnimation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Select Animation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

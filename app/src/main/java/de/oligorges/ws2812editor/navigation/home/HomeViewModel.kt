@@ -1,16 +1,25 @@
 package de.oligorges.ws2812editor.navigation.home
 
 import android.app.Application
+import android.util.Log
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.lifecycle.*
-import de.oligorges.ws2812editor.Room.AppDatabase
-import de.oligorges.ws2812editor.Room.StripeRepository
-import de.oligorges.ws2812editor.Room.stripe
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import de.oligorges.ws2812editor.Room.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class HomeViewModel(app: Application): AndroidViewModel(app) {
 
     private var app: Application
-    private val repository: StripeRepository
+    private val sRepository: StripeRepository
+    private val dRepository: DeviceRepository
     val allStripes: LiveData<List<stripe>>
 
     init {
@@ -18,19 +27,40 @@ class HomeViewModel(app: Application): AndroidViewModel(app) {
         // Gets reference to WordDao from WordRoomDatabase to construct
         // the correct WordRepository.
         val stripeDao = AppDatabase.getInstance(app).stripeDao()
-        repository = StripeRepository(stripeDao)
-        allStripes = repository.allStripes
+        val deviceDao = AppDatabase.getInstance(app).deviceDao()
+        sRepository = StripeRepository(stripeDao)
+        dRepository = DeviceRepository(deviceDao)
+        allStripes = sRepository.allStripes
+
+    }
+    fun getStatus(stripe: stripe, button: ImageButton)= viewModelScope.launch(Dispatchers.IO) {
+        var device = dRepository.getByID(stripe.deviceID)
+        val queue = Volley.newRequestQueue(app)
+        val url: String = "http://"+device.ip+":"+device.port+"/status"
+        val stringRequest = StringRequest(Request.Method.GET,  url , Response.Listener { response ->
+            if(response == "1"){
+                button.setBackgroundColor(stripe.color)
+                button.setTag("on")
+            }
+        },
+            Response.ErrorListener { error ->
+                Log.e("Http", error.toString())
+            })
+        queue.add(stringRequest)
     }
 
-    /**
-     * The implementation of insert() in the database is completely hidden from the UI.
-     * Room ensures that you're not doing any long running operations on
-     * the main thread, blocking the UI, so we don't need to handle changing Dispatchers.
-     * ViewModels have a coroutine scope based on their lifecycle called
-     * viewModelScope which we can use here.
-     */
-    fun insert(stripe: stripe) = viewModelScope.launch {
-        repository.insert(stripe)
+    fun toogleStrip(stripe: stripe)= viewModelScope.launch(Dispatchers.IO) {
+        var device = dRepository.getByID(stripe.deviceID)
+        val queue = Volley.newRequestQueue(app)
+        val url: String = "http://"+device.ip+":"+device.port+"/toogle"
+        val stringRequest = StringRequest(Request.Method.GET,  url , Response.Listener { response ->
+            Log.e("HTTP", response)
+        },
+            Response.ErrorListener { error ->
+                Log.e("HTTP", error.toString())
+            })
+        queue.add(stringRequest)
     }
+
 
 }

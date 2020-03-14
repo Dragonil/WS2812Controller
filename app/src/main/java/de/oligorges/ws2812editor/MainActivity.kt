@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.widget.*
 
 import androidx.appcompat.widget.AppCompatRadioButton
+import androidx.core.view.GravityCompat
 import androidx.core.widget.TintableCompoundButton
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -30,9 +31,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-
-    var color: Int = Color.parseColor("#0000FF")
-    var leds: Vector<AppCompatRadioButton> = Vector()
+    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +39,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
 
+
         // NavigationBar
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        drawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -49,12 +49,23 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_edit, R.id.nav_editDevice, R.id.nav_new,
-                R.id.nav_tools, R.id.nav_share
+                R.id.nav_animation, R.id.nav_share
             ), drawerLayout
         )
+
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        //I need to open the drawer onClick
+        when (item!!.itemId) {
+            android.R.id.home ->
+                drawerLayout.openDrawer(GravityCompat.START)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

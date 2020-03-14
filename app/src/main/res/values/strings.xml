@@ -11,7 +11,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_edit">Edit</string>
     <string name="menu_new">New Strip</string>
-    <string name="menu_tools">Tools</string>
+    <string name="menu_animations">Animation</string>
     <string name="menu_share">Share</string>
     <string name="menu_edit_device">DeviceSettings</string>
 
@@ -30,5 +30,10 @@
         <item>Device1</item>
         <item>Device1</item>
         <item>Device1</item>
+    </string-array>
+    <string-array name="animations">
+        <item>Shift Left</item>
+        <item>Shift Right</item>
+        <item>Blink</item>
     </string-array>
 </resources>
